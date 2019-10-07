@@ -1,12 +1,15 @@
 %%%%% Package ``beamertheme-light'': a colored beamer theme %%%%%
 %%%%% Authors: Fabien Vergnet and Vivien Goepp %%%%%
 %%%%% Contact: f.j.vergnet@gmail.com and vivien.goepp@gmail.com %%%%%
-%%%%% Package version 1.0 (29/01/2019) %%%%%
+%%%%% Package version 2.0 (07/10/2019) %%%%%
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{light}[2019/01/29 Beamer style package]
 
 \mode<presentation>
+
+\usefonttheme{professionalfonts}
+\usepackage{FiraSans}
 
 %%%%% Define colors %%%%%
 % Defaut:
@@ -21,76 +24,144 @@
 % Beige:
 \definecolor{darkpastelred}{rgb}{0.76, 0.23, 0.13}
 \definecolor{desertsand}{rgb}{0.93, 0.79, 0.69}
+% Orange:
+\definecolor{orange}{rgb}{0.96,0.62,0.00}
 
 %%%%% Define body and title colors %%%%%
 %% Foreground colors
-\newcommand{\wordcolor}{vertfonce} % Text color
+\newcommand{\wordcolor}{vertfonce!40!black} % Text color
 %% Optional colors
-\DeclareOption{blue}{\renewcommand{\wordcolor}{frenchblue}}
-\DeclareOption{red}{\renewcommand{\wordcolor}{darkpastelred}}
-\DeclareOption{purple}{\renewcommand{\wordcolor}{darkmagenta}}
-\DeclareOption*{\PackageWarning{descartes}{Unknown ‘\CurrentOption’}}
+\DeclareOption{blue}{\renewcommand{\wordcolor}{frenchblue!40!black}}
+\DeclareOption{red}{\renewcommand{\wordcolor}{darkpastelred!40!black}}
+\DeclareOption{purple}{\renewcommand{\wordcolor}{darkmagenta!40!black}}
+\DeclareOption*{\PackageWarning{beamertheme-light}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
 %% Background colors
-\newcommand{\strbg}{white!90!black} % Structure background color
-\DeclareOption{blue}{\renewcommand{\strbg}{sanddune!15!white}}
-\DeclareOption{red}{\renewcommand{\strbg}{desertsand!30!white}}
-\DeclareOption{purple}{\renewcommand{\strbg}{byzantium!25!white}}
-\DeclareOption*{\PackageWarning{descartes}{Unknown ‘\CurrentOption’}}
+\newcommand{\strbg}{white}%!90!black} % Structure background color
+%\DeclareOption{blue}{\renewcommand{\strbg}{white}}
+%\DeclareOption{red}{\renewcommand{\strbg}{white}}
+%\DeclareOption{purple}{\renewcommand{\strbg}{byzantium!25!white}}
+%\DeclareOption*{\PackageWarning{descartes}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
+%% Rule colors
+\newcommand{\secondcolor}{orange}
+
+
 %% Set colors
-\setbeamercolor{title in head/foot}{fg=\wordcolor,bg=white!90!black}
-\setbeamercolor{structure}{fg=\wordcolor,bg=\strbg}
+%\setbeamercolor{title in head/foot}{fg=\wordcolor,bg=white!90!black}
+\setbeamercolor{structure}{fg=\strbg,bg=\wordcolor}
 \setbeamercolor{title}{fg=\wordcolor,bg=white}
+\setbeamercolor{date in head/foot}{fg=\wordcolor,bg=white}
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry title}{fg=black}
+\setbeamercolor{bibliography entry location}{fg=black}
+\setbeamercolor{bibliography entry note}{fg=black}
+
+%% Fonts
+\setbeamerfont{title}{series=\firasemibold}
+\setbeamerfont{frametitle}{size=\normalsize,series=\firasemibold}
+\setbeamerfont{footnote}{size=\tiny}
+\setbeamerfont{block title}{series=\firasemibold,size=\normalsize}
+
 
 %%%%% Define title frame %%%%%
 \defbeamertemplate*{title page}{customized}[1][]
 {
   \vspace{1cm}
-  \usebeamerfont{title}\usebeamercolor[fg]{title}\center{\huge \inserttitle}\par
-   \center{\rule{0.6666\paperwidth}{0.02cm}\par}
+  \usebeamerfont{title}\usebeamercolor[fg]{title}{\Large \textsc \inserttitle}\par
+  {\center\color{orange}\rule{\textwidth}{0.02cm}\par}
   \bigskip
-  \usebeamerfont{author}\usebeamercolor[black]{author}{\large \insertauthor}\\
-  \bigskip
-  \usebeamerfont{institute}{\small \insertinstitute}\par
-  \bigskip
-  \vspace{1cm}
-  \usebeamerfont{date}{\small \insertdate}\par
+  \usebeamerfont{author}\usebeamercolor[black]{author}{\normalsize\firalight \insertauthor}\par
+  \vspace{1pt}
+  \usebeamerfont{date}{\small\firalight \insertdate}\par
+  \vspace{4pt}
+  \usebeamerfont{institute}{\small\firalight \insertinstitute}\par
 }
 %%%%% End define title frame %%%%%
+
+%%%%% Maketitle command %%%%%
+\renewcommand{\maketitle}{
+  %\setbeamertemplate{footline}{}
+  \begin{frame}[plain]
+    \titlepage
+  \end{frame}
+}
 
 %%%%% Define footline %%%%%
 \setbeamertemplate{footline}
 {
   \leavevmode%
   \hbox{%
-  \begin{beamercolorbox}[wd =.45\paperwidth, ht = 2.25ex, dp = 1ex, center]{author in head/foot}%
-    \usebeamerfont{author in head/foot}\colorbox{structure.bg}{\makebox[0.45\paperwidth]{\insertshortauthor}}
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd =.45\paperwidth, ht = 2.25ex, dp = 1ex, center]{title in head/foot}%
-    \usebeamerfont{title in head/foot}\colorbox{structure.bg}{\makebox[0.45\paperwidth]{\insertshorttitle}}
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.10\paperwidth, ht = 2.25ex, dp = 1ex, right]{date in head/foot}%
-    \usebeamerfont{date in head/foot}\colorbox{structure.bg}{\makebox[0.10\paperwidth]{
-    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}}}
-  \end{beamercolorbox}}%
-  \vskip0pt%
+    \begin{beamercolorbox}[wd =.45\paperwidth, ht = 2.25ex, dp = 1ex, center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\colorbox{white}{\makebox[0.45\paperwidth]{}}
+   \end{beamercolorbox}%
+   \begin{beamercolorbox}[wd =.45\paperwidth, ht = 2.25ex, dp = 1ex, center]{title in head/foot}%
+     \usebeamerfont{title in head/foot}\colorbox{white}{\makebox[0.45\paperwidth]{}}
+   \end{beamercolorbox}%
+   \begin{beamercolorbox}[wd =.10\paperwidth, ht = 2.25ex, dp = 1ex, right]{date in head/foot}%
+     \colorbox{white}{\makebox[.10\paperwidth]{\raggedright \firalight \footnotesize \color{\wordcolor} \insertframenumber/\inserttotalframenumber}}
+    \end{beamercolorbox}%
+  }
 }
 %%%%% End define footline %%%%%
 
+%%%%% Define section frame %%%%%
+\newcounter{fsection}
+\setcounter{fsection}{1}
+\newcommand{\framesection}[2][]{
+  \section{#2}
+  \begin{frame}[plain]
+      \vspace{1cm}
+      {\raggedleft \color{\wordcolor} \Large \textsc {\huge\thefsection}.\hspace{0.1cm}#2}%\par
+      {\center\color{orange}\rule{\textwidth}{0.02cm}}
+      {\raggedleft \color{\wordcolor} \normalsize #1}
+  \end{frame}
+  \stepcounter{fsection}
+  \addtocounter{framenumber}{-1}
+}
+%%%%% End define section frame %%%%%
+
+%%%%% Define Appendix Frame %%%%%%
+\newcommand{\frameappendix}[1]{
+  \appendix
+  \begin{frame}[plain]
+      \vspace{1cm}
+      {\raggedleft \color{\wordcolor} \Large \textsc #1}%\par
+      {\center\color{orange}\rule{\textwidth}{0.02cm}}
+  \end{frame}
+  \stepcounter{fsection}
+  \addtocounter{framenumber}{-1}
+}
+
+
+%%%%% Define environnement style %%%%%
+\def\th@mystyle{%
+  \normalfont % body font
+  \setbeamercolor{block title example}{bg=\secondcolor!50!white,fg=\wordcolor}
+  \setbeamercolor{block body example}{bg=\secondcolor!10!white,fg=black}
+  \def\inserttheoremblockenv{exampleblock}
+}
+\theoremstyle{mystyle}
+
 %%%%% Define command for the "Thank you" frame
 \newcommand{\thankframe}[1]{
-\setbeamercolor{background canvas}{fg = title.fg,bg = title.fg!50!black}
+\setbeamercolor{background canvas}{fg = title.fg,bg = \wordcolor}
 \setbeamertemplate{footline}{}
 \begin{frame}
-	\center{\Huge \textcolor{white}{#1}}
+  \center{\Huge \textcolor{white}{\textsc{#1}}}
 \end{frame}
 \setbeamercolor{structure}{fg = \wordcolor, bg = \strbg}
 \setbeamercolor{background canvas}{fg = black,bg = white}
+\setbeamercolor{structure}{fg=\strbg,bg=\wordcolor}
+\setbeamercolor{title}{fg=\wordcolor,bg=white}
+\addtocounter{framenumber}{-1}
 }
 %%%%% End define command for the "Thank you" frame
+
+%% Emphasize command
+\newcommand{\emphase}[1]{\textcolor{\secondcolor}{#1}}
 
 %% Rounded block (for definition, prop, theorems, etc...)
 \setbeamertemplate{blocks}[rounded][shadow = true]
@@ -100,10 +171,10 @@
 
 %% Redefine itemize
 \setbeamercolor{item}{fg = title.fg, bg = title.fg}
-\setbeamertemplate{itemize item}{{\tiny{\textbullet}}}
+\setbeamertemplate{itemize item}{{\small{\color{\secondcolor}\textbullet}}}
 
 %% Redefine the way the legend of a figure is written
-\setbeamertemplate{caption}{\raggedright\scriptsize{\insertcaption}\par}
+\setbeamertemplate{caption}{\firalight\raggedright\scriptsize{\textcolor{\wordcolor}{\textbf{Figure :}} \insertcaption}\par}
 
 %% To have "[number]" before any reference in bibliography
 \setbeamertemplate{bibliography item}[text]
