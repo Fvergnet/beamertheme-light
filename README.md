@@ -4,8 +4,8 @@ Several color themes are available as options.
 A usage guide is given in beamertheme-light-example.pdf. 
 
 Please send enhancements and corrections to: 
-Fabien Vergnet, f.j.vergnet@gmail.com, or
-Vivien Goepp, vivien.goepp@gmail.com
+Fabien Vergnet, fabien.vergnet[at]polytechnique.edu, or
+Vivien Goepp, vivien.goepp[at]gmail.com
 
 2019/01/29
 Package version 1.0
